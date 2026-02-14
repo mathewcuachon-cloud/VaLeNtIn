@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Special ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-red: #e63946;
+            --rose-gold: #b76e79;
+            --cream: #fff1e6;
+            --dark-text: #2d2d2d;
+            --light-text: #ffffff;
+            --accent-pink: #ff6b9d;
+            --soft-purple: #c9ada7;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fff1e6 0%, #ffd7d7 100%);
+            color: var(--dark-text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Floating Hearts Animation */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: var(--primary-red);
+            opacity: 0;
+            animation: float-up 6s infinite ease-in;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 48px;
+            color: var(--primary-red);
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: var(--rose-gold);
+            font-style: italic;
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Game Cards */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 48px rgba(230, 57, 70, 0.2);
+        }
+
+        .game-card h2 {
+            font-size: 28px;
+            color: var(--primary-red);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .game-card p {
+            color: var(--dark-text);
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-pink) 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 28px;
+            color: var(--dark-text);
+            cursor: pointer;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.05);
+            transition: background 0.2s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(230, 57, 70, 0.1);
+        }
+
+        /* Love Letter Game */
+        .letter-input {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            border: 2px solid var(--rose-gold);
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 15px;
+            resize: vertical;
+        }
+
+        .letter-preview {
+            background: var(--cream);
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid var(--primary-red);
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            display: none;
+        }
+
+        .letter-preview.show {
+            display: block;
+        }
+
+        /* Heart Matching Game */
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .card {
+            aspect-ratio: 1;
+            background: var(--primary-red);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .card .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-red);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .card .card-front {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card.flipped .card-back {
+            opacity: 0;
+        }
+
+        .card.flipped .card-front {
+            opacity: 1;
+        }
+
+        .card.matched {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--primary-red);
+        }
+
+        /* Love Quiz */
+        .quiz-question {
+            background: var(--cream);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-question h3 {
+            color: var(--primary-red);
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            padding: 12px 20px;
+            background: white;
+            border: 2px solid var(--rose-gold);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-option:hover {
+            background: var(--rose-gold);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .quiz-option.selected {
+            background: var(--primary-red);
+            color: white;
+            border-color: var(--primary-red);
+        }
+
+        .quiz-result {
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-pink) 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .quiz-result.show {
+            display: block;
+        }
+
+        .quiz-result h3 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        /* Surprise Section */
+        .surprise-box {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 215, 215, 0.9) 100%);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-top: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .surprise-box h2 {
+            color: var(--primary-red);
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+
+        .surprise-message {
+            font-size: 18px;
+            color: var(--dark-text);
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .surprise-message.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .game-board {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+            }
+
+            .card {
+                font-size: 24px;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--rose-gold);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Header -->
+    <header>
+        <h1>Happy Valentine's Day ❤️</h1>
+        <p class="subtitle">Celebrate love with interactive games and surprises!</p>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Games Grid -->
+        <div class="games-grid">
+            <!-- Love Letter Game Card -->
+            <div class="game-card" onclick="openModal('letterModal')">
+                <h2>💌 Love Letter Creator</h2>
+                <p>Write a beautiful love letter and preview it in an elegant format. Perfect for expressing your feelings!</p>
+                <button class="btn">Start Writing</button>
+            </div>
+
+            <!-- Heart Matching Game Card -->
+            <div class="game-card" onclick="openModal('matchingModal')">
+                <h2>💕 Heart Matching Game</h2>
+                <p>Test your memory with this fun heart matching game. Find all the pairs and show your love!</p>
+                <button class="btn">Play Game</button>
+            </div>
+
+            <!-- Love Quiz Card -->
+            <div class="game-card" onclick="openModal('quizModal')">
+                <h2>💖 Love Personality Quiz</h2>
+                <p>Discover your love language and personality type through fun questions!</p>
+                <button class="btn">Take Quiz</button>
+            </div>
+        </div>
+
+        <!-- Surprise Section -->
+        <div class="surprise-box">
+            <h2>💝 Click for a Surprise!</h2>
+            <button class="btn" onclick="revealSurprise()">Reveal Surprise</button>
+            <div class="surprise-message" id="surpriseMessage">
+                <h3>🌹 Special Message 🌹</h3>
+                <p>"Love is not about how many days, months, or years you have been together. Love is about how much you love each other every single day."</p>
+                <p style="margin-top: 15px; font-style: italic;">May your day be filled with love, joy, and sweet moments! ❤️</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Love Letter Modal -->
+    <div class="modal" id="letterModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('letterModal')">&times;</span>
+            <h2 style="color: var(--primary-red); margin-bottom: 20px;">💌 Write Your Love Letter</h2>
+            <textarea class="letter-input" id="letterText" placeholder="Dear Valentine,&#10;&#10;Write your heartfelt message here...&#10;&#10;With love,&#10;[Your Name]"></textarea>
+            <button class="btn" onclick="previewLetter()">Preview Letter</button>
+            <button class="btn" onclick="downloadLetter()" style="margin-left: 10px; background: var(--rose-gold);">Download</button>
+            <div class="letter-preview" id="letterPreview"></div>
+        </div>
+    </div>
+
+    <!-- Heart Matching Game Modal -->
+    <div class="modal" id="matchingModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('matchingModal')">&times;</span>
+            <h2 style="color: var(--primary-red); margin-bottom: 20px;">💕 Heart Matching Game</h2>
+            <div class="game-stats">
+                <span>Moves: <span id="moves">0</span></span>
+                <span>Matches: <span id="matches">0</span>/8</span>
+            </div>
+            <div class="game-board" id="gameBoard"></div>
+            <button class="btn" onclick="resetGame()" style="margin-top: 20px;">New Game</button>
+        </div>
+    </div>
+
+    <!-- Love Quiz Modal -->
+    <div class="modal" id="quizModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('quizModal')">&times;</span>
+            <h2 style="color: var(--primary-red); margin-bottom: 20px;">💖 Love Personality Quiz</h2>
+            <div id="quizContainer"></div>
+            <button class="btn" onclick="submitQuiz()" id="submitQuiz">Submit Quiz</button>
+            <div class="quiz-result" id="quizResult"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Made with ❤️ for Valentine's Day 2026</p>
+    </footer>
+
+    <script>
+        // Floating Hearts
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            const heartSymbols = ['❤️', '💕', '💖', '💗', '💝'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                container.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 6000);
+            }, 800);
+        }
+
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            if (modalId === 'matchingModal') {
+                initGame();
+            } else if (modalId === 'quizModal') {
+                initQuiz();
+            }
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Love Letter Functions
+        function previewLetter() {
+            const text = document.getElementById('letterText').value;
+            const preview = document.getElementById('letterPreview');
+            preview.textContent = text;
+            preview.classList.add('show');
+        }
+
+        function downloadLetter() {
+            const text = document.getElementById('letterText').value;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'my-love-letter.txt';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Heart Matching Game
+        let cards = [];
+        let flippedCards = [];
+        let moves = 0;
+        let matches = 0;
+
+        function initGame() {
+            const symbols = ['💖', '💕', '💗', '💝', '💘', '💞', '❤️', '🌹'];
+            const gameSymbols = [...symbols, ...symbols];
+            gameSymbols.sort(() => Math.random() - 0.5);
+            
+            const board = document.getElementById('gameBoard');
+            board.innerHTML = '';
+            cards = [];
+            flippedCards = [];
+            moves = 0;
+            matches = 0;
+            
+            updateStats();
+            
+            gameSymbols.forEach((symbol, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.symbol = symbol;
+                card.dataset.index = index;
+                card.innerHTML = `
+                    <div class="card-back">❤️</div>
+                    <div class="card-front">${symbol}</div>
+                `;
+                card.onclick = () => flipCard(card);
+                board.appendChild(card);
+                cards.push(card);
+            });
+        }
+
+        function flipCard(card) {
+            if (flippedCards.length === 2 || card.classList.contains('flipped') || card.classList.contains('matched')) {
+                return;
+            }
+            
+            card.classList.add('flipped');
+            flippedCards.push(card);
+            
+            if (flippedCards.length === 2) {
+                moves++;
+                updateStats();
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            
+            if (card1.dataset.symbol === card2.dataset.symbol) {
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matches++;
+                updateStats();
+                flippedCards = [];
+                
+                if (matches === 8) {
+                    setTimeout(() => alert(`Congratulations! You won in ${moves} moves! 🎉`), 500);
+                }
+            } else {
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    flippedCards = [];
+                }, 1000);
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('moves').textContent = moves;
+            document.getElementById('matches').textContent = matches;
+        }
+
+        function resetGame() {
+            initGame();
+        }
+
+        // Love Quiz
+        const quizQuestions = [
+            {
+                question: "What's your ideal date?",
+                options: ["Romantic dinner", "Adventure outdoors", "Cozy movie night", "Concert or show"],
+                scores: [10, 7, 8, 9]
+            },
+            {
+                question: "How do you express love?",
+                options: ["Words of affirmation", "Acts of service", "Quality time", "Physical touch"],
+                scores: [9, 8, 10, 7]
+            },
+            {
+                question: "What matters most in a relationship?",
+                options: ["Communication", "Trust", "Fun & laughter", "Support"],
+                scores: [10, 9, 7, 8]
+            },
+            {
+                question: "Your perfect gift would be:",
+                options: ["Handwritten letter", "Experience together", "Thoughtful surprise", "Something practical"],
+                scores: [10, 9, 7, 6]
+            },
+            {
+                question: "How do you handle conflicts?",
+                options: ["Talk it out", "Give space first", "Find compromise", "Use humor"],
+                scores: [10, 7, 9, 6]
+            }
+        ];
+
+        let selectedAnswers = [];
+
+        function initQuiz() {
+            selectedAnswers = new Array(quizQuestions.length).fill(-1);
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+            document.getElementById('quizResult').classList.remove('show');
+            
+            quizQuestions.forEach((q, qIndex) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                questionDiv.innerHTML = `
+                    <h3>Question ${qIndex + 1}: ${q.question}</h3>
+                    <div class="quiz-options">
+                        ${q.options.map((option, oIndex) => `
+                            <div class="quiz-option" onclick="selectAnswer(${qIndex}, ${oIndex})">
+                                ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function selectAnswer(questionIndex, optionIndex) {
+            selectedAnswers[questionIndex] = optionIndex;
+            
+            const questions = document.querySelectorAll('.quiz-question');
+            const options = questions[questionIndex].querySelectorAll('.quiz-option');
+            options.forEach((opt, idx) => {
+                opt.classList.toggle('selected', idx === optionIndex);
+            });
+        }
+
+        function submitQuiz() {
+            if (selectedAnswers.includes(-1)) {
+                alert('Please answer all questions!');
+                return;
+            }
+            
+            let totalScore = 0;
+            selectedAnswers.forEach((answer, qIndex) => {
+                totalScore += quizQuestions[qIndex].scores[answer];
+            });
+            
+            const avgScore = totalScore / quizQuestions.length;
+            let personality, description;
+            
+            if (avgScore >= 9) {
+                personality = "Romantic Idealist ❤️";
+                description = "You're a true romantic at heart! You value deep connections, meaningful conversations, and expressing love through words and gestures. You believe in soulmates and cherish every moment with your loved one.";
+            } else if (avgScore >= 8) {
+                personality = "Caring Companion 💕";
+                description = "You show love through actions and quality time. You're thoughtful, dependable, and always there for your partner. You create lasting memories through shared experiences and unwavering support.";
+            } else if (avgScore >= 7) {
+                personality = "Adventurous Lover 🌟";
+                description = "You keep relationships exciting and fun! You love trying new things together and creating adventures. Your spontaneous nature and humor make every day special.";
+            } else {
+                personality = "Practical Partner 💝";
+                description = "You express love through practical support and reliability. You believe in actions over words and show your care through helpful gestures and being there when it matters most.";
+            }
+            
+            const resultDiv = document.getElementById('quizResult');
+            resultDiv.innerHTML = `
+                <h3>${personality}</h3>
+                <p>${description}</p>
+                <p style="margin-top: 15px;">Your Love Score: ${Math.round(avgScore * 10)}/100</p>
+            `;
+            resultDiv.classList.add('show');
+        }
+
+        // Surprise Function
+        function revealSurprise() {
+            const message = document.getElementById('surpriseMessage');
+            message.classList.toggle('show');
+        }
+
+        // Initialize
+        createFloatingHearts();
+    </script>
+</body>
+</html>
